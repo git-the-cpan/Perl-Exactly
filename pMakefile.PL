@@ -2,7 +2,7 @@
 #
 # pMakefile.PL - Makefile.PL of Perl Poor Tools
 #
-# Copyright (c) 2008, 2009, 2010, 2011, 2014 INABA Hitoshi <ina@cpan.org>
+# Copyright (c) 2008, 2009, 2010, 2011, 2014, 2015 INABA Hitoshi <ina@cpan.org>
 ######################################################################
 
 use strict;
@@ -73,6 +73,7 @@ unless (@ARGV) {
 
 usage: pmake
 usage: pmake test
+usage: pmake xtest
 usage: pmake install
 usage: pmake dist
 usage: pmake ptar.bat
@@ -85,6 +86,7 @@ END
 
 usage: pmake
 usage: pmake test
+usage: pmake xtest
 usage: pmake install
 usage: pmake dist
 usage: pmake ptar
@@ -103,6 +105,12 @@ for my $target (@ARGV) {
     if ($target eq 'test') {
         my @test = grep m{ \A (?: test\.pl | t/.+\.t ) \z }xmsi, @file;
         runtests(@test);
+        print STDERR "\a";
+    }
+    elsif ($target eq 'xtest') {
+        my @test = grep m{ \A (?: test\.pl | t/.+\.t | xt/.+\.t ) \z }xmsi, @file;
+        runtests(@test);
+        print STDERR "\a";
     }
     elsif ($target eq 'install') {
 
@@ -481,4 +489,50 @@ sub which {
 }
 
 __END__
+
+=pod
+
+=head1 NAME
+
+pMakefile.PL - Makefile.PL for Pure Perl Environment
+
+=head1 SYNOPSIS
+
+  perl pMakefile.PL
+
+  pMakefile.PL makes pmake(on UNIX) or pmake.bat(on MSWin32).
+  pmake [Enter] for help.
+
+=head1 DEPENDENCIES
+
+This software requires perl5.00503 or later.
+
+=head1 AUTHOR
+
+INABA Hitoshi E<lt>ina@cpan.orgE<gt>
+
+This project was originated by INABA Hitoshi.
+
+=head1 LICENSE AND COPYRIGHT
+
+This software is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+=head1 SEE ALSO
+
+ CPAN Directory INABA Hitoshi
+ http://search.cpan.org/~ina/
+
+ BackPAN
+ http://backpan.perl.org/authors/id/I/IN/INA/
+
+ Recent Perl packages by "INABA Hitoshi"
+ http://code.activestate.com/ppm/author:INABA-Hitoshi/
+
+=cut
+
 :endofperl

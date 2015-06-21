@@ -5,11 +5,11 @@ package Perl::Exactly;
 #
 # http://search.cpan.org/dist/Perl-Exactly/
 #
-# Copyright (c) 2014 INABA Hitoshi <ina@cpan.org>
+# Copyright (c) 2014, 2015 INABA Hitoshi <ina@cpan.org>
 ######################################################################
 
 use 5.00503;
-$::VERSION = '0.01';
+$::VERSION = '0.02';
 use strict;
 
 if ($0 eq __FILE__) {
@@ -38,7 +38,14 @@ sub VERSION {
             _croak("$perlbin{$exactly_perl_version} isn't perl $exactly_perl_version, stopped");
         }
         else {
-            my @switch = $^W ? ('-w') : ();
+            my @switch = ();
+            if ($^W) {
+                push @switch, '-w';
+            }
+            if (defined $^I) {
+                push @switch, '-i' . $^I;
+                undef $^I;
+            }
 
             # DOS-like system
             if ($^O =~ m/\A (?: MSWin32 | NetWare | symbian | dos ) \z/oxms) {
@@ -149,6 +156,7 @@ __END__
           5.016 => 'C:/Perl516/bin/perl.exe',
           5.018 => 'C:/Perl518/bin/perl.exe',
           5.020 => 'C:/Perl520/bin/perl.exe',
+          5.022 => 'C:/Perl522/bin/perl.exe',
       ) :
 
       # UNIX-like system
@@ -162,6 +170,7 @@ __END__
           5.016 => '/path/to/perl/5.016/bin/perl',
           5.018 => '/path/to/perl/5.018/bin/perl',
           5.020 => '/path/to/perl/5.020/bin/perl',
+          5.022 => '/path/to/perl/5.022/bin/perl',
       )
   }
   __END__

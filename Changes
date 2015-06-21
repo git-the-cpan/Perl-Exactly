@@ -1,5 +1,10 @@
 Revision history for this software.
 
+0.02 2015-06-21 00:00:00
+  - support Perl 5.22
+  - support -i switch on command line
+  - created by INABA Hitoshi
+
 0.01 2014-11-19 00:00:00
   - original version
   - created by INABA Hitoshi
